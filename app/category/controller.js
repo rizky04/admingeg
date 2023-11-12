@@ -1,11 +1,66 @@
+const Category = require('./model')
+
 module.exports={
     index: async(res, req)=>{
         try{
-            req.render('index', {
-                title: 'Amin Ganteng'
-            })
+            const category = await Category.find()
+            req.render('admin/category/view_category', {category})
         } catch (err){
             console.log(err)
+        }
+    },
+    viewCreate : async(res, req)=>{
+        try {
+            req.render('admin/category/create')
+        } catch (err) {
+            console.log(err)            
+        }
+    },
+    actionCreate : async(req, res)=> {
+        try {
+            const { name } = req.body;
+
+            let category = await Category({ name })
+            await category.save();
+
+            res.redirect('/category')
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    viewEdit : async(req, res)=> {
+        try {
+            const { id } = req.params
+            const category = await Category.findOne({_id : id})
+            res.render('admin/category/edit', {
+                category
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    actionEdit : async(req, res)=> {
+        try {
+            const {id} = req.params;
+            const {name} = req.body;
+            const category = await Category.findOneAndUpdate({
+                _id : id
+            }, {name})
+            res.redirect('/category')
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    actionDelete : async(req, res)=> {
+        try {
+            const {id} = req.params
+            const category = await Category.findOneAndRemove({
+                _id : id
+            })
+            res.redirect('/category')
+        } catch (err) {
+            console.log(err);
         }
     }
 }
