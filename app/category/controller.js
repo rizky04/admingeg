@@ -54,13 +54,13 @@ module.exports={
     },
     actionDelete : async(req, res)=> {
         try {
-            const {id} = req.params
-            const category = await Category.findOneAndRemove({
-                _id : id
-            })
+            const { id } = req.params;
+            const category = await Category.deleteOne({_id: id});
             res.redirect('/category')
         } catch (err) {
             console.log(err);
         }
     }
 }
+
+// const deleteduser = await User.deleteOne({_id:req.params.id});
