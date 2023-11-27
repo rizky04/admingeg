@@ -3,10 +3,16 @@ const Category = require('./model')
 module.exports={
     index: async(res, req)=>{
         try{
+            const alertMessage = req.flash("alerMessage")
+            const alertStatus = req.flash("alertStatus")
+
+            const alert = {message: alerMessage, status: alertStatus}
             const category = await Category.find()
             req.render('admin/category/view_category', {category})
         } catch (err){
-            console.log(err)
+            req.flash('alertMessage', `${err.message}`)
+            req.flash('alertStatus', 'danger')
+            res.redirect('/category')
         }
     },
     viewCreate : async(res, req)=>{
