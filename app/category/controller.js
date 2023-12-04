@@ -3,16 +3,16 @@ const Category = require('./model')
 module.exports={
     index: async(res, req)=>{
         try{
-            const alertMessage = req.flash("alerMessage")
-            const alertStatus = req.flash("alertStatus")
+            // const alertMessage = req.flash("alerMessage")
+            // const alertStatus = req.flash("alertStatus")
 
-            const alert = {message: alerMessage, status: alertStatus}
+            // const alert = {message: alertMessage, status: alertStatus}
             const category = await Category.find()
             req.render('admin/category/view_category', {category})
         } catch (err){
-            req.flash('alertMessage', `${err.message}`)
-            req.flash('alertStatus', 'danger')
-            res.redirect('/category')
+            // req.flash('alertMessage', `${err.message}`)
+            // req.flash('alertStatus', 'danger')
+            // res.redirect('/category')
         }
     },
     viewCreate : async(res, req)=>{
@@ -28,11 +28,16 @@ module.exports={
 
             let category = await Category({ name })
             await category.save();
+            
+            // req.flash('alertMessage', "Berhasil tambah kategori")
+            // req.flash('alertStatus', "success")
 
             res.redirect('/category')
 
         } catch (err) {
-            console.log(err)
+            // req.flash('alertMessage', `${err.message}`)
+            // req.flash('alertStatus', 'danger')
+            // res.redirect('/category')
         }
     },
     viewEdit : async(req, res)=> {
@@ -43,7 +48,9 @@ module.exports={
                 category
             })
         } catch (err) {
-            console.log(err)
+            // req.flash('alertMessage', `${err.message}`)
+            // req.flash('alertStatus', 'danger')
+            // res.redirect('/category')
         }
     },
     actionEdit : async(req, res)=> {
@@ -55,7 +62,9 @@ module.exports={
             }, {name})
             res.redirect('/category')
         } catch (err) {
-            console.log(err)
+            // req.flash('alertMessage', `${err.message}`)
+            // req.flash('alertStatus', 'danger')
+            // res.redirect('/category')
         }
     },
     actionDelete : async(req, res)=> {
@@ -64,9 +73,9 @@ module.exports={
             const category = await Category.deleteOne({_id: id});
             res.redirect('/category')
         } catch (err) {
-            console.log(err);
+            // req.flash('alertMessage', `${err.message}`)
+            // req.flash('alertStatus', 'danger')
+            // res.redirect('/category')
         }
     }
 }
-
-// const deleteduser = await User.deleteOne({_id:req.params.id});
