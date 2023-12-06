@@ -21,5 +21,5 @@ let voucherSchema = mongoose.Schema({
         ref: "Nominal"
     }],
     
-})
+},{timestamps: true})
 module.exports = mongoose.model('Voucher', voucherSchema);
