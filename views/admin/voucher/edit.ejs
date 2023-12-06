@@ -11,13 +11,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>voucher</h1>
+            <h1>Voucher</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href=",">Home</a></li>
-              <li class="breadcrumb-item active"><a href="/voucher">voucher</a></li>
-              <li class="breadcrumb-item active">Tambah Data</li>
+              <li class="breadcrumb-item active"><a href="/voucher">Voucher</a></li>
+              <li class="breadcrumb-item active">Edit Data</li>
             </ol>
           </div>
         </div>
@@ -33,27 +33,51 @@
             <div class="card-body">
                 <div class="card card-primary">
                     <div class="card-header">
-                      <h3 class="card-title">Form ubah voucher  "<%= voucher.coinName%>"</h3>
+                      <h3 class="card-title">Form edit voucher</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="/voucher/edit/<%= voucher._id %>?_method=PUT" method="post">
+                    <form action="/voucher/edit/<%= voucher._id %>?_method=PUT" method="post" enctype="multipart/form-data">
                       <div class="card-body">
                         <div class="form-group">
-                          <label>Coin Name</label>
-                          <select class="form-control select2" name="coinName" id="coinName">
-                            <option value="Gold" <% if(voucher.coinName == "Gold") { %> selected <% } %> >Gold</option>
-                            <option value="Diamond" <% if(voucher.coinName == "Diamond") { %> selected <% } %> >Diamond</option>
-                            <option value="Jewel"  <% if(voucher.coinName == "Jewel") { %> selected <% } %> >Jewel</option>
+                          <label for="name">Name Game</label>
+                          <input type="text" class="form-control" name="name" id="name" value="<%= voucher.name %>">
+                        </div>
+                        <div class="form-group">
+                          <label>Category Name</label>
+                          <select class="form-control select2" name="categories" id="categories" style="width: 100%;">
+                            <% category.forEach(category=> { %>
+                            <option value="<%= category._id %>"
+                              <%if(category._id.toString() === voucher?.categories?._id.toString()){%>
+                                selected
+                                <%}%>
+                              >
+                              <%= category.name %>
+                            </option>
+                            <% }) %>
                           </select>
                         </div>
                         <div class="form-group">
-                          <label for="coinQuantity">Coin Quantity</label>
-                          <input type="number" value="<%= voucher.coinQuantity%>" class="form-control" name="coinQuantity" id="coinQuantity" placeholder="Please Insert Coin Quantity">
+                          <label>Coin Name</label>
+                          <select class="form-control select2" multiple="multiple" name="nominals" data-placeholder="Please Select Coin Name" id="nominals" style="width: 100%;">
+                            <% nominal.forEach(nominal=> { %>
+                            <option value="<%= nominal._id %>"
+                              <% voucher.nominals.forEach(voucherNominal =>{ %>
+                                <%if(nominal._id.toString() === voucherNominal._id.toString()) {%>
+                                selected  
+                                <%}%>  
+                              <%} )%>
+                              >
+                              <%= nominal.coinName %> <%= nominal.coinQuantity %>
+                            </option>
+                            <% }) %>
+                          </select>
                         </div>
                         <div class="form-group">
-                          <label for="price">Coin Price</label>
-                          <input type="number" value="<%= voucher.price%>" class="form-control" name="price" id="price" placeholder="Please Insert Coin Price">
+                          <label for="image">Image</label>
+                          <input type="file" class="form-control" name="image" id="image" placeholder="Please Insert Image">
+                        <br>
+                        <img src="http://localhost:3000/public/uploads/<%= voucher.thumbnail %>/" id="preview" alt="test">
                         </div>
                       </div>
                       <div class="card-footer">
@@ -77,3 +101,22 @@
 
   <%- include('../../partials/footer') -%>
 <%- include('../../partials/js') -%>
+
+<script>
+  function readURL (input){
+    if(input.files && input.files[0]){
+      const reader = new FileReader();
+
+      reader.onload = function(e){
+        $('#preview').attr('src', e.target.result);
+        $('#preview').attr('width', '10%');
+        $('#preview').attr('height', '10%');
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  $('#image').change(function() {
+    readURL(this)
+  })
+</script>

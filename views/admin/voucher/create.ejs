@@ -56,7 +56,7 @@
                           <label>Coin Name</label>
                           <select class="form-control select2" multiple="multiple" name="nominals" data-placeholder="Please Select Coin Name" id="nominals" style="width: 100%;">
                             <% nominal.forEach(nominal=> { %>
-                            <option value="<%= nominal._id %>"><%= nominal.coinName %> <%= nominal.price %></option>
+                            <option value="<%= nominal._id %>"><%= nominal.coinName %> <%= nominal.coinQuantity %></option>
                             <% }) %>
                           </select>
                         </div>

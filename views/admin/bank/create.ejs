@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Nominal</h1>
+            <h1>Bank</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href=",">Home</a></li>
-              <li class="breadcrumb-item active"><a href="/nominal">Nominal</a></li>
+              <li class="breadcrumb-item active"><a href="/bank">Bank</a></li>
               <li class="breadcrumb-item active">Tambah Data</li>
             </ol>
           </div>
@@ -33,32 +33,23 @@
             <div class="card-body">
                 <div class="card card-primary">
                     <div class="card-header">
-                      <h3 class="card-title">Form tambah Nominal</h3>
+                      <h3 class="card-title">Form tambah Bank</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="/nominal/action" method="post">
+                    <form action="/bank/action" method="post">
                       <div class="card-body">
                         <div class="form-group">
-                          <label>Coin Name</label>
-                          <select class="form-control select2" name="coinName" id="coinName" style="width: 100%;">
-                            <option selected="selected">Please Insert Coin Name</option>
-                            <option value="Gold">Gold</option>
-                            <option value="Diamond">Diamond</option>
-                            <option value="Jewel">Jewel</option>
-                          </select>
+                          <label for="name">Name</label>
+                          <input type="text" class="form-control" name="name" id="name" placeholder="Please Insert Name">
                         </div>
                         <div class="form-group">
-                          <label for="coinQuantity">Coin Quantity</label>
-                          <input type="number" class="form-control" name="coinQuantity" id="coinQuantity" placeholder="Please Insert Coin Quantity">
+                          <label for="nameBank">Name Bank</label>
+                          <input type="text" class="form-control" name="nameBank" id="nameBank" placeholder="Please Insert Name Bank">
                         </div>
-                        <!-- <div class="form-group">
-                          <label for="coinName">Coin Name</label>
-                          <input type="text" class="form-control" name="coinName" id="coinName" placeholder="Please Insert Coin Name">
-                        </div> -->
                         <div class="form-group">
-                          <label for="price">Coin Price</label>
-                          <input type="number" class="form-control" name="price" id="price" placeholder="Please Insert Coin Price">
+                          <label for="noRekening">Nomor Rekening</label>
+                          <input type="text" class="form-control" name="noRekening" id="noRekening" placeholder="Please Insert No Rekening">
                         </div>
                       </div>
                       <div class="card-footer">
