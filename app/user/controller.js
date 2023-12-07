@@ -1,25 +1,41 @@
 const User = require('./model')
 const bcrypt = require('bcryptjs')
+const session = require('express-session')
+
+
 module.exports = {
-    viewSigin: async (res, req) => {
+    viewSigin: async (req, res) => {
         try {
-            req.render('admin/user/view_login')
+            if (req.session.user === null || req.session.user === undefined) {
+                res.render('admin/user/view_login')
+                console.log("error 1");
+            } else {
+                res.redirect('/dashboard')
+            }
         } catch (err) {
             console.log(err)
+            res.redirect('/')
         }
     },
-    actionSignin: async (res, req) => {
+    actionSignin: async (req, res) => {
         try {
-            const { email, password } = req.body
-            const check = await User.finOne({ email: email })
+            const { email, password } = req.body;
+            const check = await User.findOne({ email: email })
 
-            if (user) {
-                if (user.status === "Y") {
+            if (check) {
+                if (check.status === "Y") {
                     const checkPassword = await bcrypt.compare(password, check.password)
                     if (checkPassword) {
+                        req.session.user = {
+                            id: check._id,
+                            email: check.email,
+                            status: check.status,
+                            name: check.name,
+                        }
                         res.redirect('/dashboard')
                     } else {
                         res.redirect('/')
+                        console.log("error 2");
                     }
                 } else {
                     res.redirect('/')
