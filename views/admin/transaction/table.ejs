@@ -1,0 +1,58 @@
+<table id="example1" class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>No</th>
+      <th>Type</th>
+      <th>Bank</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+<% for(let i = 0; i < transaction.length; i++){ %>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><%= transaction[i].type %></td>
+      <td>
+        <% transaction[i].banks.forEach(bank => {%>
+          <span class="badge badge-warning">
+            <%= bank.name %>  <%= bank.nameBank %> <%= bank.noRekening %>
+          </span>
+          <br/>
+        <% }) %>
+      </td>
+      <td>
+        <% if(transaction[i].status == 'Y') {%>
+          <span class="badge badge-success">Aktif</span>
+          <%}else{%>
+            <span class="badge badge-danger">Tidak Aktif</span>
+            <%}%>
+      </td>
+      <td>
+
+        <form action="/transaction/status/<%= transaction[i]._id %>?_method=PUT" method="post" style="display: inline-block;">
+          <button class="btn btn-primary btn-sm">
+            <i class="fas fa-folder"></i>
+            <%if(transaction[i].status === 'Y') { %>
+              Matikan
+              <%}else{%>
+                Hidupkan
+                <%}%>
+          </button>
+        </form>
+
+        <form action="/transaction/delete/<%= transaction[i]._id %>?_method=DELETE" method="post" style="display: inline-block;">
+        <a href="/transaction/edit/<%= transaction[i]._id %>" class="btn btn-warning">
+          <i class="fas fa-pencil-alt"></i>
+          Ubah
+        </a>
+        <button class="btn btn-danger">
+          <i class="fas fa-trash-o"></i>
+          Hapus
+        </button>
+      </form>
+      </td>
+    </tr>
+    <% } %>
+    </tfoot>
+  </table>
