@@ -1,4 +1,5 @@
 const express = require('express');
+const user = require('../user/model');
 const app = express();
 module.exports = {
     isLoginAdmin:  (req, res, next) => {

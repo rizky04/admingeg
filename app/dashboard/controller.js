@@ -10,6 +10,7 @@ module.exports={
             const player = await Player.countDocuments();
             const category = await Category.countDocuments();
             req.render('index', {
+                name : res.session.user.name,
                 title: 'Dashboard Page',
                 count : {
                     transaction, 

@@ -11,6 +11,7 @@ module.exports = {
                 console.log("error 1");
             } else {
                 res.redirect('/dashboard')
+                console.log("sukses 2");
             }
         } catch (err) {
             console.log(err)
@@ -47,5 +48,9 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
+    },
+    actionLogout: (req, res)=>{
+        req.session.destroy();
+        res.redirect('/');
     }
 }
