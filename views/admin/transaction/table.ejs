@@ -2,57 +2,61 @@
     <thead>
     <tr>
       <th>No</th>
-      <th>Type</th>
-      <th>Bank</th>
+      <th>Nama Game</th>
+      <th>Item</th>
+      <th>Total Harga</th>
       <th>Status</th>
+      <th>Nama Player</th>
       <th>Action</th>
     </tr>
     </thead>
     <tbody>
-<% for(let i = 0; i < transaction.length; i++){ %>
-    <tr>
-      <td><%= i + 1 %></td>
-      <td><%= transaction[i].type %></td>
-      <td>
-        <% transaction[i].banks.forEach(bank => {%>
-          <span class="badge badge-warning">
-            <%= bank.name %>  <%= bank.nameBank %> <%= bank.noRekening %>
-          </span>
-          <br/>
-        <% }) %>
-      </td>
-      <td>
-        <% if(transaction[i].status == 'Y') {%>
-          <span class="badge badge-success">Aktif</span>
-          <%}else{%>
-            <span class="badge badge-danger">Tidak Aktif</span>
-            <%}%>
-      </td>
-      <td>
-
-        <form action="/transaction/status/<%= transaction[i]._id %>?_method=PUT" method="post" style="display: inline-block;">
-          <button class="btn btn-primary btn-sm">
-            <i class="fas fa-folder"></i>
-            <%if(transaction[i].status === 'Y') { %>
-              Matikan
+      <% for(let i = 0; i < transaction.length; i++){ %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td>
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <img src="http://localhost:3000/uploads/<%= transaction[i]?.historyVoucherTopup?.thumbnail %>" alt="thumbnail" width="48px" height="48px">
+              </li>
+            </ul>
+            <%= transaction[i]?.historyVoucherTopup?.gameName %>
+            <br>
+            <%= transaction[i]?.historyVoucherTopup?.category %>
+          </td>
+          <td><%= transaction[i]?.historyVoucherTopup?.coinQuantity %>
+            <%= transaction[i]?.historyVoucherTopup?.coinName %>
+          </td>
+          <td><%= transaction[i].value %></td>
+          <td>
+            <% if(transaction[i].status == 'pending') { %>
+              <span class="badge badge-warning">Pending</span>
+              <%}else if(transaction[i].status == 'success'){%>
+                <span class="badge badge-success">Success</span>
               <%}else{%>
-                Hidupkan
+                <span class="badge badge-danger">Failed</span>
                 <%}%>
-          </button>
-        </form>
-
-        <form action="/transaction/delete/<%= transaction[i]._id %>?_method=DELETE" method="post" style="display: inline-block;">
-        <a href="/transaction/edit/<%= transaction[i]._id %>" class="btn btn-warning">
-          <i class="fas fa-pencil-alt"></i>
-          Ubah
-        </a>
-        <button class="btn btn-danger">
-          <i class="fas fa-trash-o"></i>
-          Hapus
-        </button>
-      </form>
-      </td>
-    </tr>
-    <% } %>
+          </td>
+          <td>
+            <%= transaction[i]?.player?.name ?? '-' %>
+          </td>
+          <td>
+    
+            <form action="/transaction/status/<%= transaction[i]._id %>?status=failed&_method=PUT" method="post" style="display: inline-block;">
+              <button class="btn btn-danger btn-sm">
+                <i class="fas fa-times-circle"></i>
+                Tolak
+              </button>
+            </form>
+            <form action="/transaction/status/<%= transaction[i]._id %>?status=success&_method=PUT" method="post" style="display: inline-block;">
+              <button class="btn btn-success btn-sm">
+                <i class="fas fa-check-circle"></i>
+                Terima
+              </button>
+            </form>
+    
+          </td>
+        </tr>
+        <% } %>
     </tfoot>
   </table>

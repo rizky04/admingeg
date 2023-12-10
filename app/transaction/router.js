@@ -1,14 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const {index, viewCreate, actionCreate, viewEdit, actionEdit, actionDelete, actionStatus} = require('./controller');
+const {index, actionStatus} = require('./controller');
 
 /* GET home page. */
 router.get('/', index);
-router.get('/create', viewCreate);
-router.post('/action', actionCreate);
-router.get('/edit/:id', viewEdit);
-router.put('/edit/:id', actionEdit);
-router.delete('/delete/:id', actionDelete);
 router.put('/status/:id', actionStatus);
 
 module.exports = router;

@@ -14,9 +14,11 @@ var voucherRouter = require('./app/voucher/router');
 var bankRouter = require('./app/bank/router');
 var paymentRouter = require('./app/payment/router');
 var userRouter = require('./app/user/router');
-// var usersRouter = require('./routes/users');
+var transactionRouter = require('./app/transaction/router');
+
 
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +36,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use('/adminlte', express.static(path.join(__dirname,'/node_modules/admin-lte/')));
 
 app.use('/', userRouter);
@@ -44,6 +46,7 @@ app.use('/nominal', nominalRouter);
 app.use('/voucher', voucherRouter);
 app.use('/bank', bankRouter);
 app.use('/payment', paymentRouter);
+app.use('/transaction', transactionRouter);
 // app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
