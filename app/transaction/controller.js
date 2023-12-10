@@ -3,7 +3,7 @@ const Transaction = require('./model')
 module.exports={
     index: async(res, req)=>{
         try{
-            const transaction = await Transaction.find()
+            const transaction = await Transaction.find().populate('player')
             console.log(transaction);
             req.render('admin/transaction/view_transaction', {transaction})
         } catch (err){
