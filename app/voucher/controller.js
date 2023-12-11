@@ -62,6 +62,7 @@ module.exports={
                             categories,
                             nominals,
                             thumbnail: filename,
+                            user : req.session.user.id,
                         })
                         await voucher.save();
                         req.flash('alertMessage', "Berhasil tambah voucher")
@@ -77,7 +78,8 @@ module.exports={
                 const voucher = new Voucher({
                     name,
                     categories,
-                    nominals
+                    nominals,
+                    user : req.session.user.id,
                 })
                 await voucher.save();
                 req.flash('alertMessage', "Berhasil tambah voucher")
@@ -139,6 +141,7 @@ module.exports={
                             categories,
                             nominals,
                             thumbnail: filename,
+                            user : req.session.user.id,
                         })
                         req.flash('alertMessage', "Berhasil edit voucher")
                         req.flash('alertStatus', "warning")
@@ -156,6 +159,7 @@ module.exports={
                     name,
                     categories,
                     nominals,
+                    user : req.session.user.id,
                 })
                 req.flash('alertMessage', "Berhasil edit voucher")
                 req.flash('alertStatus', "warning")

@@ -19,7 +19,11 @@ let voucherSchema = mongoose.Schema({
     nominals: [{
         type : mongoose.Schema.Types.ObjectId,
         ref: "Nominal"
-    }],
+    },],
+    user: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "User"
+    },
     
 },{timestamps: true})
 module.exports = mongoose.model('Voucher', voucherSchema);
