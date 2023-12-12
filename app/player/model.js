@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
+
 const bcrypt = require('bcryptjs')
+
+const HASH_ROUND = 10
+
 let playerSchema = mongoose.Schema({
     role  :  {
         type : String,
@@ -18,7 +22,8 @@ let playerSchema = mongoose.Schema({
     password  : {
         type: String,
         require : [true, 'password harus diisi'],
-        maxLenght : [255, "panjang password maksimal 255 karakter"]
+        maxLenght : [255, "panjang password maksimal 255 karakter"],
+        minLenght : [3, "panjang phone number maksimal 3 - 255 karakter"]
     },
     phoneNumber  : {
         type: String,
@@ -56,13 +61,13 @@ playerSchema.path('email').validate(async function (value){
         const count = await this.model('Player').countDocuments({ email : value})
         return !count;
     } catch (err) {
-        throw err;
+        throw err
     }
 }, attr => `${attr.value} sudah terdaftar`)
 
-playerSchema.pre('save', function(next){
-    this.password = bcrypt.hashSync(this.password, HASH_ROUND)
-    next();
+playerSchema.pre("save", function (next){
+    this.password = bcrypt.hashSync(this.password, HASH_ROUND);
+    next()
 })
 
 module.exports = mongoose.model('Player', playerSchema);
