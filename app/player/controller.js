@@ -61,6 +61,26 @@ module.exports = {
             const res_bank = await Bank.findOne({_id : bank})
             if(!res_bank) return res.status(404).json({message: 'data bank tidak ditemukan'})
 
+            let tac = (10 / 100) * res.nominal._doc.price;
+            let value = res_nominal._doc.price - TextTrack;
+
+            const payload = {
+                historyVoucherTopup: {
+                    gameName : res_voucher._doc.name,
+                    category : res_voucher._doc.category ? res_voucher._doc.category.name : '',
+                    thumbnail : res_voucher._doc.thumbnail,
+                    coinName : res_nominal._doc.coinName,
+                    coinQuantity : res_nominal._doc.coinQuantity,
+                    price: res_nominal._doc.price
+                },
+                historyPayment : {
+                    name : {type : String, require: [true, 'Nama Harus diisi']},
+                    type : {type : String, require: [true, 'Tipe pembayaran harus diisi']},
+                    bankName : {type : String, require: [true, 'Nama Bank harus diisi']},
+                    noRekening : {type : String, require: [true, 'Tipe pembayaran harus diisi']},
+                },
+            }
+
         } catch (err) {
             res.status(500).json({message: err.message || `Internal server error`})
         }
