@@ -4,6 +4,9 @@ const path = require('path')
 const fs = require('fs')
 const config = require('../../config')
 
+const bcrypt = require('bcryptjs')
+
+
 module.exports={
     signup : async (req, res, next)=>{
         try {
@@ -69,10 +72,32 @@ module.exports={
         const {email, password} = req.body
         Player.findOne({ email : email }).then((player)=>{
             if (player) {
-                
+                const checkPassword = bcrypt.compareSync(password, player.password)
+                if (checkPassword) {
+                    const tokem = jwt.sign({
+                        player : {
+                            id : player.id,
+                            username : player.username,
+                            email : email.email,
+                            name : player.name,
+                            phoneNumber : player.id,
+                            avatar : player.id,
+                        }
+                    })
+                } else {
+                    res.status(403).json({
+                        message: 'Password yang anda masukkan salah'
+                    })
+                }
             } else {
-                
+              res.status(403).json({
+                message : 'email yang anda maskkan belum terdaftar'
+              })  
             }
+        }).catch(()=>{
+            res.status(500).json({
+                message: err.message || `internal server error`
+            })
         })
     }
 }
