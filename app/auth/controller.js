@@ -1,10 +1,9 @@
 const Player = require('../player/model')
-
 const path = require('path')
 const fs = require('fs')
 const config = require('../../config')
-
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 
 module.exports={
@@ -68,36 +67,42 @@ module.exports={
         }
     },
 
-    signin : (req, res, next)=>{
+    signin : async (req, res, next)=>{
         const {email, password} = req.body
         Player.findOne({ email : email }).then((player)=>{
-            if (player) {
+            if(player) {
                 const checkPassword = bcrypt.compareSync(password, player.password)
                 if (checkPassword) {
-                    const tokem = jwt.sign({
+                    const token = jwt.sign({
                         player : {
                             id : player.id,
                             username : player.username,
-                            email : email.email,
+                            email : player.email,
                             name : player.name,
-                            phoneNumber : player.id,
-                            avatar : player.id,
+                            phoneNumber : player.phoneNumber,
+                            avatar : player.avatar,
                         }
+                    }, config.jwtKey)
+
+                    res.status(200).json({
+                        data: { token }
                     })
-                } else {
+                    
+                } else{
                     res.status(403).json({
-                        message: 'Password yang anda masukkan salah'
+                        message: 'password yang anda masukan salah.'
                     })
                 }
-            } else {
-              res.status(403).json({
-                message : 'email yang anda maskkan belum terdaftar'
-              })  
+            } else{
+                res.status(403).json({
+                    message: 'email yang ada masukkan belum terdaftar.'
+                })
             }
-        }).catch(()=>{
+        }).catch((err)=>{
             res.status(500).json({
-                message: err.message || `internal server error`
+                message : err.message || `internal server error`
             })
+            next()
         })
     }
 }
