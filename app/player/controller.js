@@ -56,7 +56,7 @@ module.exports = {
 
     checkout : async (req, res) =>{
         try {
-            const { voucher, nominal, payment, bank, name, accountUser, player } = req.body
+            const { voucher, nominal, payment, bank, name, accountUser } = req.body
 
             const res_voucher = await Voucher.findOne({ id : voucher})
             
@@ -89,7 +89,7 @@ module.exports = {
                 },
                 historyPayment : {
                     name : res_bank.name,
-                    type : res_bank.type,
+                    type : res_payment.type,
                     bankName : res_bank.bankName,
                     noRekening : res_bank.noRekening,
                 },
@@ -97,7 +97,7 @@ module.exports = {
                 accountUser : accountUser,
                 tax : tax,
                 value : value,
-                player : player,
+                player : req.player.id,
                 historyUser : {
                     name : res_voucher.user?.name,
                     phoneNumber : res_voucher.user?.phoneNumber
