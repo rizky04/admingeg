@@ -18,7 +18,7 @@
       <td><img src="http://localhost:3000/uploads/<%= voucher[i].thumbnail %>" alt="thumbnail" width="48px" height="48px">
       </td>
       <td><%= voucher[i].name %></td>
-      <td><%= voucher[i]?.categories?.name ?? '-' %></td>
+      <td><%= voucher[i]?.category?.name ?? '-' %></td>
       <td>
         <% voucher[i].nominals.forEach(nominal => {%>
           <span class="badge badge-warning">

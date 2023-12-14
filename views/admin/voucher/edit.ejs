@@ -45,10 +45,10 @@
                         </div>
                         <div class="form-group">
                           <label>Category Name</label>
-                          <select class="form-control select2" name="categories" id="categories" style="width: 100%;">
+                          <select class="form-control select2" name="category" id="category" style="width: 100%;">
                             <% category.forEach(category=> { %>
                             <option value="<%= category._id %>"
-                              <%if(category._id.toString() === voucher?.categories?._id.toString()){%>
+                              <%if(category._id.toString() === voucher?.category?._id.toString()){%>
                                 selected
                                 <%}%>
                               >

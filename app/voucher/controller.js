@@ -13,7 +13,7 @@ module.exports={
 
             const alert = {message: alertMessage, status: alertStatus}
             const voucher = await Voucher.find()
-            .populate('categories')
+            .populate('category')
             .populate('nominals')
             req.render('admin/voucher/view_voucher', {
                 voucher,
@@ -44,7 +44,7 @@ module.exports={
     },
     actionCreate : async(req, res)=> {
         try {
-            const { name, categories, nominals } = req.body;
+            const { name, category, nominals } = req.body;
             if (req.file) {
                 let tmp_path = req.file.path;
                 let originaExt = req.file.originalname.split('.')[req.file.originalname.split('.').length - 1];
@@ -59,7 +59,7 @@ module.exports={
                     try {
                         const voucher = new Voucher({
                             name,
-                            categories,
+                            category,
                             nominals,
                             thumbnail: filename,
                             user : req.session.user.id,
@@ -77,7 +77,7 @@ module.exports={
             }else{
                 const voucher = new Voucher({
                     name,
-                    categories,
+                    category,
                     nominals,
                     user : req.session.user.id,
                 })
@@ -98,7 +98,7 @@ module.exports={
             const category = await Category.find()
             const nominal = await Nominal.find()
             const voucher = await Voucher.findOne({_id : id})
-            .populate('categories')
+            .populate('category')
             .populate('nominals')
             res.render('admin/voucher/edit', {
                 voucher,
@@ -116,7 +116,7 @@ module.exports={
     actionEdit : async(req, res)=> {
         try {
             const {id} = req.params;
-            const { name, categories, nominals } = req.body;
+            const { name, category, nominals } = req.body;
             if (req.file) {
                 let tmp_path = req.file.path;
                 let originaExt = req.file.originalname.split('.')[req.file.originalname.split('.').length - 1];
@@ -138,7 +138,7 @@ module.exports={
                             _id : id   
                         }, {
                             name,
-                            categories,
+                            category,
                             nominals,
                             thumbnail: filename,
                             user : req.session.user.id,
@@ -157,7 +157,7 @@ module.exports={
                     _id : id   
                 }, {
                     name,
-                    categories,
+                    category,
                     nominals,
                     user : req.session.user.id,
                 })
