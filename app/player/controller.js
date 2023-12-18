@@ -15,7 +15,7 @@ module.exports = {
         try {
         const voucher = await Voucher.find()
         .select('_id name status category thumbnail')
-        .populate('category')
+        .populate('categories')
 
         res.status(200).json({data: voucher})
         } catch (error) {
