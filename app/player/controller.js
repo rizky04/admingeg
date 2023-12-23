@@ -25,7 +25,7 @@ module.exports = {
     detailPage: async(req, res)=>{
         try {
             const {id} = req.params
-            const payment = await Payment.find();
+            const payment = await Payment.find().populate('banks');
             const voucher = await Voucher.findOne({_id : id})
             .populate('category')
             .populate('nominals')
