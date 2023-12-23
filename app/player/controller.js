@@ -26,7 +26,7 @@ module.exports = {
         try {
             const {id} = req.params
             const voucher = await Voucher.findOne({_id : id})
-            .populate('categories')
+            .populate('category')
             .populate('nominals')
             .populate('user', '_id name phoneNumber')
 
