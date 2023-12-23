@@ -25,17 +25,17 @@ module.exports = {
     detailPage: async(req, res)=>{
         try {
             const {id} = req.params
+            const Payment = await Payment.find();
             const voucher = await Voucher.findOne({_id : id})
             .populate('category')
             .populate('nominals')
-            .populate('payments')
             .populate('user', '_id name phoneNumber')
 
             if (!voucher) {
                 return res.status(404).json({message:"voucher game tidak ditemukan!"})
             }
 
-            res.status(200).json({data: voucher})
+            res.status(200).json({data: voucher}, {payment: Payment})
         } catch (error) {
             res.status(500).json({message: error.message || `internal server error`})
         }
