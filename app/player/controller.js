@@ -35,7 +35,7 @@ module.exports = {
                 return res.status(404).json({message:"voucher game tidak ditemukan!"})
             }
 
-            res.status(200).json({data: voucher}, {payment: payment})
+            res.status(200).json({data: voucher, payment : {data : payment}})
         } catch (error) {
             res.status(500).json({message: error.message || `internal server error`})
         }
